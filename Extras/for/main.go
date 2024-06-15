@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	x := 10
@@ -8,17 +10,18 @@ func main() {
 		fmt.Println(i)
 	}
 
-	done := make(chan bool)
+	done := make(chan string)
 	values := []string{"a", "b", "c"}
 
 	for _, v := range values {
 		go func() {
 			fmt.Println(v)
-			done <- true
+			done <- fmt.Sprintf("Foi processado o valor: %s", v)
+
 		}()
 	}
 
 	for range values {
-		<-done
+		fmt.Println(<-done)
 	}
 }
