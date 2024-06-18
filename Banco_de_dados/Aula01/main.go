@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
@@ -32,6 +33,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	p.Price = 1000
+	err = updateProduct(db, p)
+	if err != nil {
+		panic(err)
+	}
+
+	product, err := selectProduct(db, p.ID)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Product: %v, possui o preço de %.2f", product.Name, product.Price)
 }
 
 func insertProduct(db *sql.DB, p *Product) error {
@@ -45,4 +57,32 @@ func insertProduct(db *sql.DB, p *Product) error {
 		return err
 	}
 	return nil
+}
+
+func updateProduct(db *sql.DB, p *Product) error {
+	stmt, err := db.Prepare("UPDATE products SET name =?, price =? WHERE id =?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(p.Name, p.Price, p.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func selectProduct(db *sql.DB, id string) (*Product, error) {
+	stmt, err := db.Prepare("SELECT id, name, price FROM products WHERE id =?")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+	var p Product
+	//err = stmt.QueryRowContext(ctx, id).Scan(&p.ID, &p.Name, &p.Price) É possivel usar o QueryRowContext para passar um contexto com timeout
+	err = stmt.QueryRow(id).Scan(&p.ID, &p.Name, &p.Price)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
 }
