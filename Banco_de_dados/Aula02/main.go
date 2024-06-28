@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -80,11 +78,11 @@ func main() {
 	// item4.Name = "iPhone 12"
 	// db.Save(&item4)
 
-	var item5 Item
-	db.First(&item5, 2)
-	fmt.Println(item5)
+	//var item5 Item
+	//db.First(&item5, 2)
+	//fmt.Println(item5)
 	// delete
-	fmt.Println("=== delete ===")
-	db.Delete(&item5)
+	//fmt.Println("=== delete ===")
+	//db.Delete(&item5)
 
 }
