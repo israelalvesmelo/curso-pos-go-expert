@@ -61,3 +61,15 @@ func (p *Product) Validate() error {
 
 	return nil
 }
+
+func (p *Product) SetName(name string) {
+	if name != "" {
+		p.Name = name
+	}
+}
+
+func (p *Product) SetPrice(price float64) {
+	if price > 0 {
+		p.Price = price
+	}
+}
