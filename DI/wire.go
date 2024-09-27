@@ -10,9 +10,14 @@ import (
 	"github.com/israelalvesmelo/di/product"
 )
 
+var setRepository = wire.NewSet(
+	product.NewProductRepository,
+	wire.Bind(new(product.ProductRepositoryInterface), new(*product.ProductRepository)),
+)
+
 func NewUseCase(db *sql.DB) *product.ProductUsecase {
 	wire.Build(
-		product.NewProductRepository,
+		setRepository,
 		product.NewProductUsecase,
 	)
 	return &product.ProductUsecase{}

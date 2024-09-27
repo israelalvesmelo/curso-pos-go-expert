@@ -8,6 +8,7 @@ package main
 
 import (
 	"database/sql"
+	"github.com/google/wire"
 	"github.com/israelalvesmelo/di/product"
 )
 
@@ -18,3 +19,7 @@ func NewUseCase(db *sql.DB) *product.ProductUsecase {
 	productUsecase := product.NewProductUsecase(productRepository)
 	return productUsecase
 }
+
+// wire.go:
+
+var setRepository = wire.NewSet(product.NewProductRepository, wire.Bind(new(product.ProductRepositoryInterface), new(*product.ProductRepository)))

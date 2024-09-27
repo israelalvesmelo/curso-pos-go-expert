@@ -11,9 +11,9 @@ func main() {
 		panic(err)
 	}
 
-	productUsecase := NewUseCase(db)
+	useCase := NewUseCase(db)
 
-	product, err := productUsecase.GetProduct(1)
+	product, err := useCase.GetProduct(1)
 	if err != nil {
 		panic(err)
 	}
