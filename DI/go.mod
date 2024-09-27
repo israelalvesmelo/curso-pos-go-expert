@@ -2,4 +2,4 @@ module github.com/israelalvesmelo/di
 
 go 1.22.4
 
-require github.com/mattn/go-sqlite3 v1.14.23
+require github.com/google/wire v0.6.0

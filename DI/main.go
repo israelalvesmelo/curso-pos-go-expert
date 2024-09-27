@@ -3,8 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-
-	"github.com/israelalvesmelo/di/product"
 )
 
 func main() {
@@ -13,11 +11,7 @@ func main() {
 		panic(err)
 	}
 
-	// Create repositories
-	productRepository := product.NewProductRepository(db)
-
-	// Create usecases
-	productUsecase := product.NewProductUsecase(productRepository)
+	productUsecase := NewUseCase(db)
 
 	product, err := productUsecase.GetProduct(1)
 	if err != nil {
