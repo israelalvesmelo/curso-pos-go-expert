@@ -37,12 +37,13 @@ func NewCreateOrderUseCase(
 }
 
 func (c *CreateOrderUseCase) Execute(input OrderInputDTO) (OrderOutputDTO, error) {
-	order, err := entity.NewOrder(input.ID, input.Price, input.Tax)
-	if err != nil {
-		return OrderOutputDTO{}, err
+	order := entity.Order{
+		ID:    input.ID,
+		Price: input.Price,
+		Tax:   input.Tax,
 	}
-	err = order.CalculateFinalPrice()
-	if err != nil {
+	order.CalculateFinalPrice()
+	if err := c.OrderRepository.Save(&order); err != nil {
 		return OrderOutputDTO{}, err
 	}
 
@@ -50,7 +51,7 @@ func (c *CreateOrderUseCase) Execute(input OrderInputDTO) (OrderOutputDTO, error
 		ID:         order.ID,
 		Price:      order.Price,
 		Tax:        order.Tax,
-		FinalPrice: order.FinalPrice,
+		FinalPrice: order.Price + order.Tax,
 	}
 
 	c.EventOrderCreated.SetPayload(dto)
