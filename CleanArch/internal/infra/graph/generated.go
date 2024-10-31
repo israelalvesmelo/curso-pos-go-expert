@@ -14,7 +14,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/israelalvesmelo/CleanArch/graph/model"
+	"github.com/israelalvesmelo/CleanArch/internal/infra/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -274,7 +274,7 @@ func (ec *executionContext) field_Mutation_createOrder_argsInput(
 
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalOOrderInput2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋgraphᚋmodelᚐOrderInput(ctx, tmp)
+		return ec.unmarshalOOrderInput2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋinternalᚋinfraᚋgraphᚋmodelᚐOrderInput(ctx, tmp)
 	}
 
 	var zeroVal *model.OrderInput
@@ -410,7 +410,7 @@ func (ec *executionContext) _Mutation_createOrder(ctx context.Context, field gra
 	}
 	res := resTmp.(*model.Order)
 	fc.Result = res
-	return ec.marshalOOrder2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋgraphᚋmodelᚐOrder(ctx, field.Selections, res)
+	return ec.marshalOOrder2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋinternalᚋinfraᚋgraphᚋmodelᚐOrder(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createOrder(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3374,14 +3374,14 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOOrder2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
+func (ec *executionContext) marshalOOrder2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋinternalᚋinfraᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Order(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOOrderInput2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋgraphᚋmodelᚐOrderInput(ctx context.Context, v interface{}) (*model.OrderInput, error) {
+func (ec *executionContext) unmarshalOOrderInput2ᚖgithubᚗcomᚋisraelalvesmeloᚋCleanArchᚋinternalᚋinfraᚋgraphᚋmodelᚐOrderInput(ctx context.Context, v interface{}) (*model.OrderInput, error) {
 	if v == nil {
 		return nil, nil
 	}
