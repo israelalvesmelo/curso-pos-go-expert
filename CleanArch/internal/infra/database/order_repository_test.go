@@ -23,7 +23,7 @@ func (suite *OrderRepositoryTestSuite) SetupSuite() {
 	suite.Db = db
 }
 
-func (suite *OrderRepositoryTestSuite) TearDownTest() {
+func (suite *OrderRepositoryTestSuite) TearDownSuite() {
 	suite.Db.Close()
 }
 
@@ -48,4 +48,17 @@ func (suite *OrderRepositoryTestSuite) TestGivenAnOrder_WhenSave_ThenShouldSaveO
 	suite.Equal(order.Price, orderResult.Price)
 	suite.Equal(order.Tax, orderResult.Tax)
 	suite.Equal(order.FinalPrice, orderResult.FinalPrice)
+}
+
+func (suite *OrderRepositoryTestSuite) TestListOrders_WhenFindAll_ThenShouldReturnListOfOrders() {
+	suite.Db.Exec("DELETE FROM orders")
+	suite.Db.Exec("INSERT INTO `orders` (`id`, `price`, `tax`, `final_price`) VALUES ('test', '10', '1', '11');")
+
+	repo := NewOrderRepository(suite.Db)
+	ordersResult, err := repo.FindAll()
+	suite.NoError(err)
+	suite.Equal(1, len(ordersResult))
+	suite.Equal("test", ordersResult[0].ID)
+	suite.Equal(10.0, ordersResult[0].Price)
+	suite.Equal(1.0, ordersResult[0].Tax)
 }
