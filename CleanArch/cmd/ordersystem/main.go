@@ -11,6 +11,7 @@ import (
 	"github.com/israelalvesmelo/CleanArch/configs"
 	"github.com/israelalvesmelo/CleanArch/internal/event/handler"
 	"github.com/israelalvesmelo/CleanArch/internal/infra/graph"
+	"github.com/israelalvesmelo/CleanArch/internal/infra/graph/generated"
 	"github.com/israelalvesmelo/CleanArch/internal/infra/grpc/pb"
 	"github.com/israelalvesmelo/CleanArch/internal/infra/grpc/service"
 	"github.com/israelalvesmelo/CleanArch/internal/infra/web/webserver"
@@ -64,8 +65,8 @@ func main() {
 	}
 	go grpcServer.Serve(lis)
 
-	srv := graphql_handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
-		CreateOrderUseCase: *createOrderUseCase,
+	srv := graphql_handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{
+		CreateOrderUseCase: *createOrderUseCase, ListOrdersUseCase: *listOrdersUseCase,
 	}}))
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
